@@ -34,8 +34,8 @@ public class TestApplicationTest {
     @Test
     @SneakyThrows
     public void testWrite(){
-        writeAsyncWithTransaction(1_0000);
-        writeAsyncWithTransaction(1_0000);
+        writeAsyncWithTransaction(1);
+        writeAsyncWithTransaction(1);
 //        writeAsync(1_0000);
 //        writeAsync(1_0000);
 //        writeAsync(1_0000);

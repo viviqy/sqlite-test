@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author chiyo <br>
  */
@@ -16,6 +18,11 @@ public class MessageInfoService {
     private S1MessageInfoMapper s1MessageInfoMapper;
 
     public void insert(MessageInfo messageInfo){
+        try {
+            TimeUnit.SECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         s1MessageInfoMapper.insert(messageInfo);
     }
 

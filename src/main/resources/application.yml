@@ -25,6 +25,7 @@ spring:
           hikari:
             max-pool-size: 32
             min-idle: 16
+            connection-timeout: 500
         # 配置第二个数据库
         s2:
           driver-class-name: org.sqlite.JDBC
