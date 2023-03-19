@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: drg-pc-service
+  main:
+    allow-bean-definition-overriding: true
+    #  datasource:
+    #    driver-class-name: org.sqlite.JDBC
+    #    # 开发模式使用
+    #    url: jdbc:sqlite:/tmp/db/s1.db
+    # PC应用模式使用
+    #url: jdbc:sqlite:${programdata:${allusersprofile}\Application Data}\ideaStreamDRG\db_drg_service.db
+    # username: root
+    # password: P@ssw0rd
+  datasource:
+    # 配置数据源类型
+    type: org.sqlite.javax.SQLiteConnectionPoolDataSource
+    dynamic:
+      primary: s1 #设置默认的数据源或者数据源组,默认值即为master。 为了统一，设置成one
+      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+      datasource:
+        # 配置第一个数据库
+        s1:
+          driver-class-name: org.sqlite.JDBC
+          url: jdbc:sqlite:/tmp/db/s1.db
+        # 配置第二个数据库
+        s2:
+          driver-class-name: org.sqlite.JDBC
+          url: jdbc:sqlite:/tmp/db/s2.db
+        s3:
+          driver-class-name: org.sqlite.JDBC
+          url: jdbc:sqlite:/tmp/db/s3.db
+#    driver-class-name: org.sqlite.JDBC
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
