@@ -22,6 +22,9 @@ spring:
         s1:
           driver-class-name: org.sqlite.JDBC
           url: jdbc:sqlite:/tmp/db/s1.db
+          hikari:
+            max-pool-size: 32
+            min-idle: 16
         # 配置第二个数据库
         s2:
           driver-class-name: org.sqlite.JDBC
