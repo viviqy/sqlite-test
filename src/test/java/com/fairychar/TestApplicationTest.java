@@ -2,7 +2,10 @@ package com.fairychar;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fairychar.s1.entity.MessageInfo;
+import com.fairychar.s1.entity.UserInfo;
 import com.fairychar.s1.mapper.S1MessageInfoMapper;
+import com.fairychar.s1.mapper.UserInfoMapper;
+import com.fairychar.s1.service.MessageInfoService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.runner.RunWith;
@@ -24,15 +27,18 @@ import java.util.stream.IntStream;
 public class TestApplicationTest {
     @Autowired
     private S1MessageInfoMapper s1MessageInfoMapper;
-
+    @Autowired
+    private UserInfoMapper userInfoMapper;
+    @Autowired
+    private MessageInfoService messageInfoService;
     @Test
     @SneakyThrows
     public void testWrite(){
-        writeAsync(1_0000);
-        writeAsync(1_0000);
-        writeAsync(1_0000);
-        writeAsync(1_0000);
-        writeAsync(1_0000);
+        writeAsyncWithTransaction(1_0000);
+        writeAsyncWithTransaction(1_0000);
+//        writeAsync(1_0000);
+//        writeAsync(1_0000);
+//        writeAsync(1_0000);
         Thread.currentThread().join();
     }
     @Test
@@ -46,6 +52,32 @@ public class TestApplicationTest {
             for (int i = 0; i < round; i++) {
                 try {
                     s1MessageInfoMapper.insert(new MessageInfo("aaa","bbb","ccc"));
+                    log.info("insert + round={}",i);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+    }
+    private void writeAsyncWithTransaction(int round){
+        new Thread(()->{
+            for (int i = 0; i < round; i++) {
+                try {
+                    messageInfoService.insert(new MessageInfo("aaa","bbb","ccc"));
+                    log.info("insert + round={}",i);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+    }
+    private void writeAsyncUserInfo(int round){
+        new Thread(()->{
+            for (int i = 0; i < round; i++) {
+                try {
+                    userInfoMapper.insert(new UserInfo("aaa","bbb","ccc"));
                     log.info("insert + round={}",i);
                 } catch (Exception e) {
                     e.printStackTrace();

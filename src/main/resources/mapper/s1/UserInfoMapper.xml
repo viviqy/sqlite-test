@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fairychar.s1.mapper.UserInfoMapper">
+
+  <resultMap type="com.fairychar.s1.entity.UserInfo" id="BaseResultMap">
+    <result property="text1" column="text1"/>
+    <result property="text2" column="text2"/>
+    <result property="text3" column="text3"/>
+  </resultMap>
+
+
+  <sql id="Base_Column_List">
+    text1, text2, text3      
+  </sql>
+
+    <!--通过实体作为筛选条件查询-->
+  <select id="queryAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from main.user_info
+    <where>
+      1=1 
+      <if test="text1 != null and text1 != ''">
+       and `text1` like concat('%',#{text1},'%')
+      </if>
+      <if test="text2 != null and text2 != ''">
+       and `text2` like concat('%',#{text2},'%')
+      </if>
+      <if test="text3 != null and text3 != ''">
+       and `text3` like concat('%',#{text3},'%')
+      </if>
+    </where>
+  </select>
+    
+    <!--通过实体作为筛选条件查询-->
+  <select id="pageAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"></include>
+    from main.user_info
+    <where>
+      1=1 
+      <if test="userInfo.text1 != null and userInfo.text1 != ''">
+        and `text1` like concat('%',#{userInfo.text1},'%')
+      </if>
+      <if test="userInfo.text2 != null and userInfo.text2 != ''">
+        and `text2` like concat('%',#{userInfo.text2},'%')
+      </if>
+      <if test="userInfo.text3 != null and userInfo.text3 != ''">
+        and `text3` like concat('%',#{userInfo.text3},'%')
+      </if>
+    </where>
+  </select>
+  
+    <!--通过实体作为筛选条件查询总数-->
+  <select id="count" resultType="int">
+    select count(*)
+    from main.user_info
+    <where>
+      1=1 
+      <if test="text1 != null and text1 != ''">
+       and `text1` like concat('%',#{text1},'%')
+      </if>
+      <if test="text2 != null and text2 != ''">
+       and `text2` like concat('%',#{text2},'%')
+      </if>
+      <if test="text3 != null and text3 != ''">
+       and `text3` like concat('%',#{text3},'%')
+      </if>
+    </where>
+  </select>
+</mapper>

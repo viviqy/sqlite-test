@@ -33,6 +33,7 @@ replay_pid*
 *.iml
 out
 gen
+/**/target
 ### Windows template
 # Windows thumbnail cache files
 Thumbs.db
